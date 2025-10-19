@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generateFromSeedString } from '../lib/generator';
+import { buildSessionDeck } from '../lib/deck';
 import { Reason } from '../components/Reason';
 import { Controls } from '../components/Controls';
 import { SfxToggle } from '../components/SfxToggle';
@@ -17,10 +18,15 @@ function randomSeed(): string {
 }
 
 export default function HomePage() {
-  const [seed, setSeed] = useState<string>(() => randomSeed());
+  const [sessionSeed] = useState<string>(() => randomSeed());
+  const [index, setIndex] = useState<number>(0);
   const [pinned, setPinned] = useState<{ seed: string; reason: string }[]>([]);
 
-  const { reason } = useMemo(() => generateFromSeedString(seed), [seed]);
+  const deck = useMemo(() => buildSessionDeck(sessionSeed, 100), [sessionSeed]);
+
+  const current = deck[index % deck.length];
+  const seed = current ? current.seed : sessionSeed;
+  const reason = current ? current.reason : generateFromSeedString(sessionSeed).reason;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -38,7 +44,7 @@ export default function HomePage() {
   }, [pinned]);
 
   const onAnother = useCallback(() => {
-    setSeed(randomSeed());
+    setIndex((i) => i + 1);
   }, []);
 
   const isPinned = pinned.some((p) => p.seed === seed);

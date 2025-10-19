@@ -14,6 +14,14 @@ const openings = [
   'I architect',
   'I prototype',
   'I launch',
+  // more variety
+  'I optimize',
+  'I automate',
+  'I iterate',
+  'I de-risk',
+  'I scale',
+  'I polish',
+  'I deliver',
 ];
 
 const adverbs = [
@@ -25,6 +33,15 @@ const adverbs = [
   'with receipts',
   'on Fridays',
   'with fewer meetings',
+  // more variety
+  'at scale',
+  'without drama',
+  'while you sleep',
+  'with batteries included',
+  'with care',
+  'before standup',
+  'after standup',
+  'under prod pressure',
 ];
 
 const objects = [
@@ -36,6 +53,15 @@ const objects = [
   'tiny miracles',
   'clean APIs',
   'systems that scale',
+  // more variety
+  'rock-solid backends',
+  'evidence-based roadmaps',
+  'accessible components',
+  'flows that convert',
+  'developer tooling',
+  'paved paths',
+  'data pipelines',
+  'smart defaults',
 ];
 
 const spice = [
@@ -47,6 +73,15 @@ const spice = [
   'your CTO sleeps better.',
   'benchmarks blush.',
   'style and uptime.',
+  // more variety
+  'ops asleep; users happy.',
+  'PRs tell the story.',
+  'less yak, more stack.',
+  'boring on-call, exciting demos.',
+  'docs that write themselves (almost).',
+  'launch days feel like Tuesdays.',
+  'choices with receipts.',
+  'results, not vibes.',
 ];
 
 const joins = ['with'];
@@ -92,4 +127,50 @@ export function generateFromSeedString(seedString: string, opts?: GenerateOption
 } {
   const seed = seedFromString(seedString);
   return { reason: generateFromSeedNumber(seed, opts), seed };
+}
+
+export type ReasonDetails = {
+  opening: string;
+  adverb: string;
+  object: string;
+  spice?: string;
+  fact?: string | null;
+  pattern: 'OBJ_ADV_WITH_FACT' | 'WITH_FACT_ADV' | 'OBJ_ADV_SPICE';
+  reason: string;
+};
+
+export function generateDetailsFromSeedNumber(seed: number, opts?: GenerateOptions): ReasonDetails {
+  const rand = prngFromSeed(seed);
+  const start = choice(rand, openings);
+  const adv = choice(rand, adverbs);
+  const obj = choice(rand, objects);
+  const j = choice(rand, joins);
+  const fact = maybeFact(rand, opts?.facts);
+
+  let reason = '';
+  let pattern: ReasonDetails['pattern'] = 'OBJ_ADV_SPICE';
+  let sp: string | undefined;
+  if (bool(rand, 0.5) && fact) {
+    reason = `${start} ${obj} ${adv} — ${j} ${fact}.`;
+    pattern = 'OBJ_ADV_WITH_FACT';
+  } else if (fact && bool(rand, 0.5)) {
+    reason = `${start} ${j} ${fact}, ${adv}.`;
+    pattern = 'WITH_FACT_ADV';
+  } else {
+    sp = choice(rand, spice);
+    reason = `${start} ${obj} ${adv} — ${sp}`;
+    pattern = 'OBJ_ADV_SPICE';
+  }
+
+  if (reason.length > 120) {
+    reason = reason.replace(/—.*$/, '— results, not vibes.');
+  }
+
+  return { opening: start, adverb: adv, object: obj, spice: sp, fact, pattern, reason };
+}
+
+export function generateDetailsFromSeedString(seedString: string, opts?: GenerateOptions): ReasonDetails & { seed: number } {
+  const seed = seedFromString(seedString);
+  const details = generateDetailsFromSeedNumber(seed, opts);
+  return { ...details, seed };
 }
