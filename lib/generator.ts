@@ -49,7 +49,7 @@ const spice = [
   'style and uptime.',
 ];
 
-const joins = ['with', 'for', 'into'];
+const joins = ['with'];
 
 function maybeFact(rand: () => number, provided?: string[]): string | null {
   const pool = (provided && provided.length > 0 ? provided : FACTS).filter(Boolean);
