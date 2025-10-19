@@ -1,0 +1,40 @@
+{
+  "name": "neon-cyber-reasons-rocco",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Neon cyber \"Reasons to Work With Me\" generator for Rocco Fortuna (Next.js 14, Tailwind, Framer Motion, three.js)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.111.3",
+    "@react-three/fiber": "^8.15.16",
+    "@vercel/og": "^0.6.3",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.23",
+    "next": "^14.2.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "8.57.0",
+    "eslint-config-next": "^14.2.7",
+    "postcss": "^8.4.45",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}

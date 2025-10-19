@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #b1d7ff 0%, #ffb1d7 100%);
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-[var(--bg-gradient)] text-slate-900 antialiased;
+}
+
+/* Subtle noise texture using layered gradients (no image asset) */
+.bg-noise:before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px);
+  background-size: 3px 3px, 3px 3px;
+  background-position: 0 0, 1.5px 1.5px;
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+}
+
+/* Focus ring utility */
+.focus-ring {
+  @apply outline-none ring-2 ring-offset-2 ring-slate-900/30 ring-offset-white;
+}
+
+/* Magnetic cursor effect area */
+.magnetic {
+  will-change: transform;
+}
+
+/* Smooth scrolling but respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
