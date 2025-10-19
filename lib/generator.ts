@@ -8,11 +8,11 @@ export type GenerateOptions = {
 export function generateFromSeedNumber(seed: number, opts?: GenerateOptions): string {
   const rand = prngFromSeed(seed);
   const pool = (opts?.facts && opts.facts.length > 0 ? opts.facts : FACTS).filter(Boolean);
-  
+
   if (pool.length === 0) {
     return 'I ship great code.';
   }
-  
+
   return choice(rand, pool);
 }
 

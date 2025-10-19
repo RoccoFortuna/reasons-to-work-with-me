@@ -25,7 +25,7 @@ export function Controls({ seed, reason, onAnother, onPin, onUnpin, isPinned }: 
   }, [reason, sfxEnabled]);
 
   const copyLink = useCallback(async () => {
-    const url = `${location.origin}/r/${encodeURIComponent(seed)}`;
+    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
     try {
       await navigator.clipboard.writeText(url);
       playSfx('chime', sfxEnabled);
@@ -33,17 +33,19 @@ export function Controls({ seed, reason, onAnother, onPin, onUnpin, isPinned }: 
   }, [seed, sfxEnabled]);
 
   const shareX = useCallback(() => {
-    const url = `${location.origin}/r/${encodeURIComponent(seed)}`;
-    const text = encodeURIComponent(reason);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`, '_blank');
+    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const text = encodeURIComponent(`${reason}\n\n`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer');
     playSfx('click', sfxEnabled);
   }, [reason, seed, sfxEnabled]);
 
   const shareLinkedIn = useCallback(() => {
-    const url = `${location.origin}/r/${encodeURIComponent(seed)}`;
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const text = encodeURIComponent(`${reason}\n\n${url}`);
+    // LinkedIn's shareArticle endpoint allows passing text and url
+    window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${text}`, '_blank', 'noopener,noreferrer');
     playSfx('click', sfxEnabled);
-  }, [seed, sfxEnabled]);
+  }, [reason, seed, sfxEnabled]);
 
   const handleAnother = useCallback(() => {
     playSfx('click', sfxEnabled);

@@ -14,8 +14,8 @@ export function Reason({ reason, reasonKey }: { reason: string; reasonKey: strin
         <div className="flex items-center gap-4 mb-4">
           <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
           <div>
-            <p className="text-xs uppercase tracking-wider text-slate-600">Countless reasons to work with Rocco</p>
-            <p className="text-slate-800 font-medium">But he also has some actual skills</p>
+            <p className="text-slate-800 font-medium">Countless reasons to work with Rocco</p>
+            <p className="text-xs uppercase tracking-wider text-slate-600">But he also has some actual experience</p>
           </div>
         </div>
         <AnimatePresence mode="wait">
