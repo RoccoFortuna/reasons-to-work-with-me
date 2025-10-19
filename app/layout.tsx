@@ -7,17 +7,17 @@ import Link from 'next/link';
 const font = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 
 export const metadata: Metadata = {
-  title: 'Reasons to work with Rocco — Neon Cyber Generator',
+  title: 'Countless reasons to work with Rocco',
   description: 'Seeded, witty reasons to work with Rocco Fortuna. Neon cyber aesthetic, delightfully shareable.',
-  metadataBase: new URL('https://example.com'),
+  metadataBase: new URL('https://www.linkedin.com/in/roccofortuna/'),
   openGraph: {
-    title: 'Reasons to work with Rocco',
+    title: 'Countless reasons to work with Rocco',
     description: 'Seeded, witty reasons to work with Rocco Fortuna.',
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Reasons to work with Rocco',
+    title: 'Countless reasons to work with Rocco',
     description: 'Seeded, witty reasons to work with Rocco Fortuna.'
   }
 };

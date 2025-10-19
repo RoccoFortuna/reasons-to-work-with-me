@@ -12,10 +12,10 @@ export function Reason({ reason, reasonKey }: { reason: string; reasonKey: strin
         'hover:shadow-[0_0_0_2px_rgba(255,255,255,0.6),0_0_40px_rgba(177,215,255,0.4)] transition-shadow'
       )}>
         <div className="flex items-center gap-4 mb-4">
-          <img src="/placeholder.svg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
+          <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
           <div>
-            <p className="text-xs uppercase tracking-wider text-slate-600">Reasons to work with Rocco</p>
-            <p className="text-slate-800 font-medium">Seeded and shareable</p>
+            <p className="text-xs uppercase tracking-wider text-slate-600">Countless reasons to work with Rocco</p>
+            <p className="text-slate-800 font-medium">But he also has some actual skills</p>
           </div>
         </div>
         <AnimatePresence mode="wait">

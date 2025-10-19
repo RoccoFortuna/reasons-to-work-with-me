@@ -1,4 +1,4 @@
-# Neon Cyber “Reasons to Work With Me” Generator
+# “Countless Reasons to Work With Me” Generator
 
 A beautifully useless, neon cyber web app that generates short, witty, grounded reasons to work with Rocco Fortuna.
 

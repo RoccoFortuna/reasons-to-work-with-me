@@ -2,7 +2,7 @@
   "name": "neon-cyber-reasons-rocco",
   "version": "0.1.0",
   "private": true,
-  "description": "Neon cyber \"Reasons to Work With Me\" generator for Rocco Fortuna (Next.js 14, Tailwind, Framer Motion, three.js)",
+  "description": "\"Countless Reasons to Work With Me\" generator for Rocco Fortuna (Next.js 14, Tailwind, Framer Motion, three.js)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

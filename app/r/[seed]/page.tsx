@@ -11,7 +11,7 @@ export function generateMetadata({ params }: { params: { seed: string } }): Meta
   const ogUrl = `${base}/api/og?seed=${encodeURIComponent(seedParam)}`;
   return {
     title: reason,
-    description: 'Reasons to work with Rocco Fortuna',
+    description: 'Countless reasons to work with Rocco Fortuna',
     openGraph: { images: [{ url: ogUrl }] },
     twitter: { images: [ogUrl] }
   };
