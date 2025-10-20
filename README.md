@@ -3,12 +3,12 @@
 A beautifully useless, neon cyber web app that generates short, witty, grounded reasons to work with Rocco Fortuna.
 
 Tech stack:
-- Next.js 14 (App Router, TypeScript)
+- Next.js 14 (App Router, TypeScript, Static Export)
 - Tailwind CSS
 - Framer Motion
 - three.js + @react-three/drei (low-CPU 3D blob)
-- @vercel/og for dynamic OG images
 - Vitest for unit tests
+- GitHub Actions for deployment
 
 ## Getting started
 
@@ -28,12 +28,13 @@ npm run dev
 
 Open http://localhost:3000
 
-Build and start:
+Build for production:
 
 ```bash
 npm run build
-npm start
 ```
+
+This creates a static export in the `out/` directory.
 
 Lint, typecheck, test:
 
@@ -46,24 +47,34 @@ npm test
 ## Routes
 
 - `/` — Home generator page
-- `/r/[seed]` — Deterministic, server-rendered detail page per seed
-- `/api/og?seed=...` — OG image endpoint (Edge Runtime)
+- `/?seed=[seed]` — Load a specific reason by seed (shareable links)
 
 ## Features
 
-- Seeded PRNG; deterministic reasons per `/r/[seed]`
-- “Another reason” button with smooth motion
+- Seeded PRNG; deterministic reasons per `?seed=[seed]` query parameter
+- "Another reason" button with smooth motion animations
 - Copy text, copy link, and share to X/LinkedIn
-- Pin favorites into an animated mini-grid (localStorage)
 - Neon gradient background with subtle noise
 - Low-CPU 3D blob (respects `prefers-reduced-motion`)
 - SFX toggle (click/chime) with WebAudio, disabled by default if `prefers-reduced-motion` is on
+- Email modal popup after 10 seconds
+- PDF CV viewer modal
 - Accessible: keyboard focus styles, tabbable controls, reduced motion compliance
-- Footer credit: “Rocco Fortuna — https://www.linkedin.com/in/roccofortuna/”
+- Fully static export compatible with GitHub Pages
+
+## Deployment
+
+This app is configured for GitHub Pages deployment:
+
+- **Live Site**: https://RoccoFortuna.github.io/reasons-to-work-with-me/
+- Automatic deployment on push to `main` branch via GitHub Actions
+- Static export with conditional `basePath` for production
 
 ## Notes
 
-- Placeholder avatar lives at `public/placeholder.svg`.
-- Facts used by the generator live in `data/facts.ts` and can be extended.
-- Unit tests cover generator determinism and template integrity.
+- Avatar image lives at `public/icon-reasons-to-work-with-rocco.jpeg`
+- CV lives at `public/cv-rocco-fortuna-ai-engineer.pdf`
+- Facts used by the generator live in `data/facts.ts` and can be extended
+- Unit tests cover generator determinism and template integrity
+- The app uses query parameters (`?seed=`) instead of dynamic routes for GitHub Pages compatibility
 
