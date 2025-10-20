@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { PdfModal } from './PdfModal';
+import { assetPath } from '../lib/basePath';
 
 export function Reason({ reason, reasonKey }: { reason: string; reasonKey: string | number }) {
   const reduce = useReducedMotion();
@@ -17,7 +18,7 @@ export function Reason({ reason, reasonKey }: { reason: string; reasonKey: strin
           'hover:shadow-[0_0_0_2px_rgba(255,255,255,0.6),0_0_40px_rgba(177,215,255,0.4)] transition-shadow'
         )}>
           <div className="flex items-center gap-4 mb-4">
-            <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
+            <img src={assetPath("/icon-reasons-to-work-with-rocco.jpeg")} width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
             <div>
               <p className="text-slate-800 font-medium">Countless reasons to work with me</p>
               <p className="text-xs uppercase tracking-wider text-slate-600">

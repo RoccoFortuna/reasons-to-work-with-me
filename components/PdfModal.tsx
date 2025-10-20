@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { assetPath } from '../lib/basePath';
 
 export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [mounted, setMounted] = useState(false);
@@ -73,7 +74,7 @@ export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
               {/* PDF Viewer */}
               <div className="flex-1 overflow-auto bg-slate-100">
                 <iframe
-                  src="/cv-rocco-fortuna-ai-engineer.pdf"
+                  src={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
                   className="w-full h-full"
                   title="Rocco Fortuna CV"
                 />
