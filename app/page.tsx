@@ -23,8 +23,8 @@ function randomSeed(): string {
 function HomePageContent() {
   const searchParams = useSearchParams();
   const urlSeed = searchParams.get('seed');
-
-  const [sessionSeed] = useState<string>(() => urlSeed || randomSeed());
+  
+  const [sessionSeed, setSessionSeed] = useState<string>(() => randomSeed());
   const [index, setIndex] = useState<number>(0);
   const [showToast, setShowToast] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -36,10 +36,14 @@ function HomePageContent() {
   const seed = current?.seed ?? sessionSeed;
   const reason = current?.reason ?? 'Building your personalized experience...';
 
-  // Track when component has mounted to avoid hydration mismatch
+  // Track when component has mounted and load URL seed if present
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (urlSeed) {
+      setSessionSeed(urlSeed);
+      setIndex(0); // Reset to first item when loading from URL
+    }
+  }, [urlSeed]);
 
   // Show email modal after 10 seconds
   useEffect(() => {
