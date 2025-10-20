@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import { Background } from '../components/Background';
-import Link from 'next/link';
+import { Footer } from '../components/Footer';
 
 const font = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 
@@ -33,16 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus-ring absolute left-2 top-2 z-50 bg-white px-3 py-1 rounded">Skip to content</a>
         <Background />
         <main id="main" className="relative z-10">{children}</main>
-        <footer className="relative z-10 mt-16 pb-8 text-center text-sm text-slate-700">
-          <Link
-            href="https://www.linkedin.com/in/roccofortuna/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline decoration-dotted underline-offset-4 hover:decoration-solid focus-ring rounded px-1"
-          >
-            Rocco Fortuna — https://www.linkedin.com/in/roccofortuna/
-          </Link>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

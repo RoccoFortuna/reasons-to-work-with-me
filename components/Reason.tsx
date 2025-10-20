@@ -2,22 +2,35 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import clsx from 'clsx';
+import { useState } from 'react';
+import { PdfModal } from './PdfModal';
 
 export function Reason({ reason, reasonKey }: { reason: string; reasonKey: string | number }) {
   const reduce = useReducedMotion();
+  const [isPdfOpen, setIsPdfOpen] = useState(false);
+
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className={clsx(
-        'relative rounded-2xl p-6 sm:p-8 md:p-10 bg-white/60 backdrop-blur border border-white/40 shadow-neon',
-        'hover:shadow-[0_0_0_2px_rgba(255,255,255,0.6),0_0_40px_rgba(177,215,255,0.4)] transition-shadow'
-      )}>
-        <div className="flex items-center gap-4 mb-4">
-          <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
-          <div>
-            <p className="text-slate-800 font-medium">Countless reasons to work with Rocco</p>
-            <p className="text-xs uppercase tracking-wider text-slate-600">But he also has some actual experience</p>
+    <>
+      <div className="w-full max-w-3xl mx-auto">
+        <div className={clsx(
+          'relative rounded-2xl p-6 sm:p-8 md:p-10 bg-white/60 backdrop-blur border border-white/40 shadow-neon',
+          'hover:shadow-[0_0_0_2px_rgba(255,255,255,0.6),0_0_40px_rgba(177,215,255,0.4)] transition-shadow'
+        )}>
+          <div className="flex items-center gap-4 mb-4">
+            <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
+            <div>
+              <p className="text-slate-800 font-medium">Countless important reasons to work with Rocco</p>
+              <p className="text-xs uppercase tracking-wider text-slate-600">
+                But he also has some{' '}
+                <button
+                  onClick={() => setIsPdfOpen(true)}
+                  className="hover:text-slate-800 transition-colors cursor-pointer uppercase"
+                >
+                  actual experience
+                </button>
+              </p>
+            </div>
           </div>
-        </div>
         <AnimatePresence mode="wait">
           <motion.p
             key={String(reasonKey)}
@@ -32,5 +45,8 @@ export function Reason({ reason, reasonKey }: { reason: string; reasonKey: strin
         </AnimatePresence>
       </div>
     </div>
+
+    <PdfModal isOpen={isPdfOpen} onClose={() => setIsPdfOpen(false)} />
+    </>
   );
 }

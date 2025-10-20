@@ -33,8 +33,17 @@ function ensureCtx() {
   return ctx;
 }
 
-export function playSfx(type: 'click' | 'chime', enabled: boolean) {
-  if (!enabled) return;
+function isSfxEnabled(): boolean {
+  if (typeof window === 'undefined') return false;
+  const fromStorage = window.localStorage.getItem(STORAGE_KEY);
+  if (fromStorage != null) return fromStorage === '1';
+  return !getPrefersReducedMotion();
+}
+
+export function playSfx(type: 'click' | 'chime', enabled?: boolean) {
+  // Check current state if not explicitly provided
+  const shouldPlay = enabled !== undefined ? enabled : isSfxEnabled();
+  if (!shouldPlay) return;
   const audio = ensureCtx();
   if (!audio) return;
   const now = audio.currentTime;

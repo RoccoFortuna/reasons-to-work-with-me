@@ -36,14 +36,53 @@ function Blob({ animated }: { animated: boolean }) {
   );
 }
 
+function BreathingGradient({ animated }: { animated: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!animated || !ref.current) return;
+
+    let startTime = Date.now();
+    let raf = 0;
+
+    const loop = () => {
+      if (ref.current) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        // Breathing effect: oscillates between 52.5% and 75% with a 4-second cycle (50% larger)
+        const breathScale = 80 + 11.25 * (1 + Math.sin(elapsed * Math.PI / 2));
+        ref.current.style.background = `radial-gradient(circle,
+          rgba(177, 215, 255, 0.6) 0%,
+          rgba(255, 177, 215, 0.5) ${breathScale * 0.5}%,
+          rgba(255, 255, 255, 1) ${breathScale}%)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [animated]);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute inset-0 bg-white"
+      style={{
+        background: animated
+          ? undefined
+          : 'radial-gradient(circle, rgba(177, 215, 255, 0.6) 0%, rgba(255, 177, 215, 0.5) 30%, rgba(255, 255, 255, 1) 60%)'
+      }}
+    />
+  );
+}
+
 export function Background() {
   const reduce = useReducedMotion();
   return (
     <div aria-hidden className="fixed inset-0 -z-10">
-      <div className="absolute inset-0 bg-neonGradient" />
+      <BreathingGradient animated={!reduce} />
       {/* soft vignettes */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%)'
+        background: 'radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)'
       }} />
       {/* 3D element */}
       <div className="absolute inset-0 opacity-90">
