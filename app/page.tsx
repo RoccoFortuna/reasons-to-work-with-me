@@ -23,7 +23,7 @@ function randomSeed(): string {
 function HomePageContent() {
   const searchParams = useSearchParams();
   const urlSeed = searchParams.get('seed');
-  
+
   const [sessionSeed] = useState<string>(() => urlSeed || randomSeed());
   const [index, setIndex] = useState<number>(0);
   const [showToast, setShowToast] = useState(false);
