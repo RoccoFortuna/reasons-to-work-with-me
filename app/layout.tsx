@@ -9,7 +9,7 @@ const font = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 export const metadata: Metadata = {
   title: 'Countless reasons to work with Rocco',
   description: 'Seeded, witty reasons to work with Rocco Fortuna. Neon cyber aesthetic, delightfully shareable.',
-  metadataBase: new URL('https://cto-new.github.io'),
+  metadataBase: new URL('https://roccofortuna.github.io'),
   openGraph: {
     title: 'Countless reasons to work with Rocco',
     description: 'Seeded, witty reasons to work with Rocco Fortuna.',
