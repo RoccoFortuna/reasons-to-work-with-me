@@ -23,8 +23,9 @@ function randomSeed(): string {
 function HomePageContent() {
   const searchParams = useSearchParams();
   const urlSeed = searchParams.get('seed');
-  
-  const [sessionSeed, setSessionSeed] = useState<string>(() => randomSeed());
+
+  const [sessionSeed] = useState<string>(() => randomSeed());
+  const [specificSeed, setSpecificSeed] = useState<string | null>(null);
   const [index, setIndex] = useState<number>(0);
   const [showToast, setShowToast] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -32,16 +33,26 @@ function HomePageContent() {
 
   const deck = useMemo(() => buildSessionDeck(sessionSeed, 100), [sessionSeed]);
 
-  const current = useMemo(() => deck[index % deck.length], [deck, index]);
-  const seed = current?.seed ?? sessionSeed;
-  const reason = current?.reason ?? 'Building your personalized experience...';
+  // If we have a specific seed from URL, show that; otherwise show from deck
+  const seed = specificSeed || deck[index % deck.length]?.seed || sessionSeed;
+  const reason = useMemo(() => {
+    if (specificSeed) {
+      return generateFromSeedString(specificSeed).reason;
+    }
+    return deck[index % deck.length]?.reason || 'Building your personalized experience...';
+  }, [specificSeed, deck, index]);
 
   // Track when component has mounted and load URL seed if present
   useEffect(() => {
     setMounted(true);
-    if (urlSeed) {
-      setSessionSeed(urlSeed);
-      setIndex(0); // Reset to first item when loading from URL
+
+    // Read seed from URL as fallback (for static sites)
+    const params = new URLSearchParams(window.location.search);
+    const seedFromUrl = urlSeed || params.get('seed');
+
+    if (seedFromUrl) {
+      console.log('Loading seed from URL:', seedFromUrl);
+      setSpecificSeed(seedFromUrl);
     }
   }, [urlSeed]);
 
@@ -55,6 +66,7 @@ function HomePageContent() {
   }, []);
 
   const onAnother = useCallback(() => {
+    setSpecificSeed(null); // Clear specific seed when browsing
     setIndex((i) => i + 1);
   }, []);
 
