@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { generateFromSeedString } from '../lib/generator';
 import { buildSessionDeck } from '../lib/deck';
 import { Reason } from '../components/Reason';
@@ -19,8 +20,11 @@ function randomSeed(): string {
   return Math.floor(Math.random() * 1e12).toString(36);
 }
 
-export default function HomePage() {
-  const [sessionSeed] = useState<string>(() => randomSeed());
+function HomePageContent() {
+  const searchParams = useSearchParams();
+  const urlSeed = searchParams.get('seed');
+  
+  const [sessionSeed] = useState<string>(() => urlSeed || randomSeed());
   const [index, setIndex] = useState<number>(0);
   const [showToast, setShowToast] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -51,7 +55,8 @@ export default function HomePage() {
   }, []);
 
   const copyShareLink = useCallback(async () => {
-    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const basePath = window.location.pathname.replace(/\/$/, '');
+    const url = `${window.location.origin}${basePath}?seed=${encodeURIComponent(seed)}`;
     try {
       await navigator.clipboard.writeText(url);
       playSfx('chime');
@@ -85,12 +90,30 @@ export default function HomePage() {
 
       <section className="mx-auto mt-12 w-full max-w-3xl text-center text-sm text-slate-700">
         <p>
-          Share this vibe: <button onClick={copyShareLink} className="underline decoration-dotted underline-offset-2 focus-ring rounded px-1 hover:decoration-solid cursor-pointer">/r/{seed}</button>
+          Share this vibe: <button onClick={copyShareLink} className="underline decoration-dotted underline-offset-2 focus-ring rounded px-1 hover:decoration-solid cursor-pointer">?seed={seed}</button>
         </p>
       </section>
 
       <CopyToast show={showToast} onClose={() => setShowToast(false)} />
       <EmailModal isOpen={showEmailModal} onClose={() => setShowEmailModal(false)} />
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="relative z-10 px-4 pb-16 pt-16 sm:pt-24">
+        <header className="mx-auto mb-6 flex w-full max-w-5xl items-center justify-between gap-3">
+          <h1 className="text-lg font-medium tracking-tight text-slate-900">Why Work With Me?</h1>
+          <SfxToggle />
+        </header>
+        <div className="w-full max-w-3xl mx-auto">
+          <div className="relative rounded-2xl p-6 sm:p-8 md:p-10 bg-white/60 backdrop-blur border border-white/40 shadow-neon h-64" />
+        </div>
+      </div>
+    }>
+      <HomePageContent />
+    </Suspense>
   );
 }

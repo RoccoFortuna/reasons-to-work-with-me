@@ -24,7 +24,8 @@ export function Controls({ seed, reason, onAnother }: ControlsProps) {
   }, [reason]);
 
   const copyLink = useCallback(async () => {
-    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const basePath = window.location.pathname.replace(/\/$/, '');
+    const url = `${window.location.origin}${basePath}?seed=${encodeURIComponent(seed)}`;
     try {
       await navigator.clipboard.writeText(url);
       playSfx('chime');
@@ -33,14 +34,16 @@ export function Controls({ seed, reason, onAnother }: ControlsProps) {
   }, [seed]);
 
   const shareX = useCallback(() => {
-    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const basePath = window.location.pathname.replace(/\/$/, '');
+    const url = `${window.location.origin}${basePath}?seed=${encodeURIComponent(seed)}`;
     const text = encodeURIComponent(`${reason}\n\n`);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer');
     playSfx('click');
   }, [reason, seed]);
 
   const shareLinkedIn = useCallback(() => {
-    const url = `${window.location.origin}/r/${encodeURIComponent(seed)}`;
+    const basePath = window.location.pathname.replace(/\/$/, '');
+    const url = `${window.location.origin}${basePath}?seed=${encodeURIComponent(seed)}`;
     const text = encodeURIComponent(`${reason}\n\n${url}`);
     // LinkedIn's shareArticle endpoint allows passing text and url
     window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${text}`, '_blank', 'noopener,noreferrer');

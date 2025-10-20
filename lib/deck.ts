@@ -14,12 +14,7 @@ function randomSeedString(rand: () => number): string {
 }
 
 function sharesParts(prev: ReturnType<typeof generateDetailsFromSeedNumber> | null, curr: ReturnType<typeof generateDetailsFromSeedNumber>): boolean {
-  if (!prev) return false;
-  if (prev.opening === curr.opening) return true;
-  if (prev.adverb === curr.adverb) return true;
-  if (prev.object === curr.object) return true;
-  if (prev.spice && curr.spice && prev.spice === curr.spice) return true;
-  if (prev.fact && curr.fact && prev.fact === curr.fact) return true;
+  // Simplified: we only have the full reason string, so we can't check for shared parts
   return false;
 }
 

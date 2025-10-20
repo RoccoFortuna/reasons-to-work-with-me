@@ -42,7 +42,7 @@ export function prngFromSeed(seed: number) {
 }
 
 export function choice<T>(rand: () => number, arr: T[]): T {
-  return arr[Math.floor(rand() * arr.length)];
+  return arr[Math.floor(rand() * arr.length)]!;
 }
 
 export function bool(rand: () => number, p = 0.5): boolean {

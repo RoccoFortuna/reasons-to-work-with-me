@@ -9,16 +9,18 @@ const font = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 export const metadata: Metadata = {
   title: 'Countless reasons to work with Rocco',
   description: 'Seeded, witty reasons to work with Rocco Fortuna. Neon cyber aesthetic, delightfully shareable.',
-  metadataBase: new URL('https://www.linkedin.com/in/roccofortuna/'),
+  metadataBase: new URL('https://cto-new.github.io'),
   openGraph: {
     title: 'Countless reasons to work with Rocco',
     description: 'Seeded, witty reasons to work with Rocco Fortuna.',
-    type: 'website'
+    type: 'website',
+    images: [{ url: '/reasons-to-work-with-me/icon-reasons-to-work-with-rocco.jpeg' }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Countless reasons to work with Rocco',
-    description: 'Seeded, witty reasons to work with Rocco Fortuna.'
+    description: 'Seeded, witty reasons to work with Rocco Fortuna.',
+    images: ['/reasons-to-work-with-me/icon-reasons-to-work-with-rocco.jpeg']
   }
 };
 
