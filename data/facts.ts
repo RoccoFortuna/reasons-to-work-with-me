@@ -167,5 +167,5 @@ export const FACTS: string[] = [
   "I write code comments like love letters to my future self.",
   "I don’t trust code that worked on the first try.",
 
-  "'Thank god it's friday' will make me want to kill myself"
+  "Made of 71% water, 29% hype, 1% care for percentages adding up"
 ];

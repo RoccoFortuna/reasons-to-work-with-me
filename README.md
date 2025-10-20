@@ -64,11 +64,11 @@ npm test
 
 ## Deployment
 
-This app is configured for GitHub Pages deployment:
+This app is configured for GitHub Pages deployment with a custom domain:
 
-- **Live Site**: https://RoccoFortuna.github.io/reasons-to-work-with-me/
+- **Live Site**: https://whyworkwith.me
 - Automatic deployment on push to `main` branch via GitHub Actions
-- Static export with conditional `basePath` for production
+- Static export optimized for GitHub Pages
 
 ## Notes
 
