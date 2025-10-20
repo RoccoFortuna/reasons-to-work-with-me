@@ -1,4 +1,6 @@
 export const FACTS: string[] = [
+  "My mom says I'm a great guy. I mostly agree.",
+
   "I run on coffee and curiosity, and somehow compile both into working code.",
   "I have strong opinions, weakly held... except about indentation. Tabs are peace.",
   "I deploy faster than I cook, but I still remember to test in staging (most days).",

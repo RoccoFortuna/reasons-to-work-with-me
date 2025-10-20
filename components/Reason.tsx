@@ -19,25 +19,26 @@ export function Reason({ reason, reasonKey }: { reason: string; reasonKey: strin
           <div className="flex items-center gap-4 mb-4">
             <img src="/icon-reasons-to-work-with-rocco.jpeg" width={48} height={48} alt="Rocco avatar placeholder" className="rounded-full shadow" />
             <div>
-              <p className="text-slate-800 font-medium">Countless important reasons to work with Rocco</p>
+              <p className="text-slate-800 font-medium">Countless reasons to work with me</p>
               <p className="text-xs uppercase tracking-wider text-slate-600">
-                But he also has some{' '}
+                (I also have some{' '}
                 <button
                   onClick={() => setIsPdfOpen(true)}
                   className="hover:text-slate-800 transition-colors cursor-pointer uppercase"
                 >
                   actual experience
                 </button>
+                )
               </p>
             </div>
           </div>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.p
             key={String(reasonKey)}
-            initial={reduce ? false : { opacity: 0, y: 8, filter: 'blur(4px)' }}
-            animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8, filter: 'blur(4px)' }}
-            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 35 }}
             className="text-2xl sm:text-3xl md:text-4xl leading-tight font-medium"
           >
             {reason}

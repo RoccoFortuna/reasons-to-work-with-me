@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { generateFromSeedString } from '../../../lib/generator';
 import { Reason } from '../../../components/Reason';
@@ -8,6 +8,7 @@ import { Controls } from '../../../components/Controls';
 import { SfxToggle } from '../../../components/SfxToggle';
 import { playSfx } from '../../../lib/sfx';
 import { CopyToast } from '../../../components/CopyToast';
+import { EmailModal } from '../../../components/EmailModal';
 
 function randomSeed(): string {
   if (typeof crypto !== 'undefined' && 'getRandomValues' in crypto) {
@@ -21,12 +22,27 @@ function randomSeed(): string {
 export default function SeededClient({ initialSeed, initialReason }: { initialSeed: string; initialReason: string }) {
   const [seed, setSeed] = useState(initialSeed);
   const [showToast, setShowToast] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const reason = useMemo(() => {
     if (seed === initialSeed) return initialReason;
     return generateFromSeedString(seed).reason;
   }, [seed, initialReason, initialSeed]);
+
+  // Show email modal after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowEmailModal(true);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const onAnother = useCallback(() => {
     const s = randomSeed();
@@ -50,7 +66,7 @@ export default function SeededClient({ initialSeed, initialReason }: { initialSe
         <SfxToggle />
       </header>
 
-      <Reason reason={reason} reasonKey={seed} />
+      <Reason reason={reason} reasonKey={mounted ? seed : initialSeed} />
       <Controls seed={seed} reason={reason} onAnother={onAnother} />
 
       <section className="mx-auto mt-12 w-full max-w-3xl text-center text-sm text-slate-700">
@@ -60,6 +76,7 @@ export default function SeededClient({ initialSeed, initialReason }: { initialSe
       </section>
 
       <CopyToast show={showToast} onClose={() => setShowToast(false)} />
+      <EmailModal isOpen={showEmailModal} onClose={() => setShowEmailModal(false)} />
     </div>
   );
 }
