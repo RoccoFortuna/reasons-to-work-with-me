@@ -5,11 +5,20 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { assetPath } from '../lib/basePath';
 
+// Detect if we're on iOS/mobile with poor iframe PDF support
+function isMobileWithPoorPdfSupport() {
+  if (typeof window === 'undefined') return false;
+  const ua = navigator.userAgent;
+  return /iPhone|iPad|iPod|Android/i.test(ua);
+}
+
 export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setIsMobile(isMobileWithPoorPdfSupport());
     return () => setMounted(false);
   }, []);
 
@@ -83,25 +92,41 @@ export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 
               {/* PDF Viewer */}
               <div className="flex-1 overflow-auto bg-slate-100">
-                <iframe
-                  src={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
-                  className="w-full h-full"
-                  title="Rocco Fortuna CV"
-                  style={{ minHeight: '500px' }}
-                />
-                {/* Fallback message for mobile browsers with poor PDF support */}
-                <noscript>
-                  <div className="p-8 text-center">
-                    <p className="mb-4">Your browser doesn't support inline PDF viewing.</p>
-                    <a
-                      href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
-                      download="Rocco-Fortuna-CV.pdf"
-                      className="inline-block rounded-lg bg-slate-900 text-white px-4 py-2"
-                    >
-                      Download CV
-                    </a>
+                {isMobile ? (
+                  // On mobile: show message with download/open options
+                  <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+                    <div className="max-w-md space-y-4">
+                      <p className="text-lg text-slate-700">
+                        For the best viewing experience on mobile, please download or open the CV in your browser.
+                      </p>
+                      <div className="flex flex-col gap-3">
+                        <a
+                          href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                          download="Rocco-Fortuna-CV.pdf"
+                          className="inline-block rounded-lg bg-slate-900 text-white px-6 py-3 font-medium hover:bg-slate-800"
+                        >
+                          📥 Download CV
+                        </a>
+                        <a
+                          href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block rounded-lg border-2 border-slate-900 text-slate-900 px-6 py-3 font-medium hover:bg-slate-50"
+                        >
+                          🔗 Open in Browser
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </noscript>
+                ) : (
+                  // On desktop: show iframe as normal
+                  <iframe
+                    src={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                    className="w-full h-full"
+                    title="Rocco Fortuna CV"
+                    style={{ minHeight: '500px' }}
+                  />
+                )}
               </div>
             </div>
           </motion.div>

@@ -48,7 +48,7 @@ export function Controls({ seed, reason, onAnother }: ControlsProps) {
     const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
     window.location.href = shareUrl;
     playSfx('click');
-  }, [reason, seed]);
+  }, [seed]);
 
   const handleAnother = useCallback(() => {
     playSfx('click');
