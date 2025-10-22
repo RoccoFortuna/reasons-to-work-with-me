@@ -62,13 +62,23 @@ export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-slate-50">
                 <h2 className="text-lg font-medium text-slate-900">Rocco Fortuna - CV</h2>
-                <button
-                  onClick={onClose}
-                  className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
-                  aria-label="Close PDF viewer"
-                >
-                  Close ✕
-                </button>
+                <div className="flex gap-2">
+                  <a
+                    href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                    download="Rocco-Fortuna-CV.pdf"
+                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
+                    aria-label="Download CV"
+                  >
+                    Download ↓
+                  </a>
+                  <button
+                    onClick={onClose}
+                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
+                    aria-label="Close PDF viewer"
+                  >
+                    Close ✕
+                  </button>
+                </div>
               </div>
 
               {/* PDF Viewer */}
@@ -77,7 +87,21 @@ export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                   src={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
                   className="w-full h-full"
                   title="Rocco Fortuna CV"
+                  style={{ minHeight: '500px' }}
                 />
+                {/* Fallback message for mobile browsers with poor PDF support */}
+                <noscript>
+                  <div className="p-8 text-center">
+                    <p className="mb-4">Your browser doesn't support inline PDF viewing.</p>
+                    <a
+                      href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                      download="Rocco-Fortuna-CV.pdf"
+                      className="inline-block rounded-lg bg-slate-900 text-white px-4 py-2"
+                    >
+                      Download CV
+                    </a>
+                  </div>
+                </noscript>
               </div>
             </div>
           </motion.div>

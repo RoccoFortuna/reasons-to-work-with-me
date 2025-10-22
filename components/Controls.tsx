@@ -44,9 +44,9 @@ export function Controls({ seed, reason, onAnother }: ControlsProps) {
   const shareLinkedIn = useCallback(() => {
     const basePath = window.location.pathname.replace(/\/$/, '');
     const url = `${window.location.origin}${basePath}?seed=${encodeURIComponent(seed)}`;
-    const text = encodeURIComponent(`${reason}\n\n${url}`);
-    // LinkedIn's shareArticle endpoint allows passing text and url
-    window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${text}`, '_blank', 'noopener,noreferrer');
+    // Use LinkedIn's sharing URL - simpler and works better on mobile
+    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    window.location.href = shareUrl;
     playSfx('click');
   }, [reason, seed]);
 
