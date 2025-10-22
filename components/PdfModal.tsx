@@ -72,14 +72,16 @@ export function PdfModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
               <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-slate-50">
                 <h2 className="text-lg font-medium text-slate-900">Rocco Fortuna - CV</h2>
                 <div className="flex gap-2">
-                  <a
-                    href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
-                    download="Rocco-Fortuna-CV.pdf"
-                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
-                    aria-label="Download CV"
-                  >
-                    Download ↓
-                  </a>
+                  {!isMobile && (
+                    <a
+                      href={assetPath("/cv-rocco-fortuna-ai-engineer.pdf")}
+                      download="Rocco-Fortuna-CV.pdf"
+                      className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
+                      aria-label="Download CV"
+                    >
+                      Download ↓
+                    </a>
+                  )}
                   <button
                     onClick={onClose}
                     className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 focus-ring"
